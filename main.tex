@@ -129,6 +129,7 @@ Profiles are filtered on two criteria. The filters reduce the number of profiles
 
 \begin{figure}[h!]
     \centering
+    \includegraphics[width=15cm]{figs/placeholder/shear_profile_plot_PROFILES_GEOG_ALL_True_cape-shear_magrot_391137_-7_nclust-10.png}
     \caption{\todo{fig} Heatmap of grid-columns that have been filtered based on CAPE and maximum shear.}
     \label{fig:filtered_heatmap}
 \end{figure}
@@ -166,25 +167,11 @@ The algorithm for PCA works by centring the dataset on the mean for each of its 
 The number of dimensions of each sample in the original dataset is 40 (20 pressure levels for $u$ and $v$). We have chosen to keep as many principal components that are required to explain 90\% of the variance, which for this dataset is 7. These 7 principal components are shown in Fig. \ref{fig:pca_components}. \todo{say something about these PCs}.
 
 \begin{figure}[htp!]%
+    \centering
+    \includegraphics[width=15cm]{figs/placeholder/shear_profile_plot_SEVEN_PCA_PROFILES_True_cape-shear.png}
     \caption{\todo{fig} The first 7 principal components.}%
     \label{fig:pca_components}%
 \end{figure}
-
-% It is also insightful to look at the profiles that are produced by reprojecting the original profile along only these first 4 principal components. Some examples showing high and low fidelity to the original profiles are shown in Fig. \ref{fig:pca_reprojections}. \todo{some basic stats of how good keeping the first 4 components is? Or is this implicit in the fact that I have chosen to keep 90\% of the variance.}
-
-%\begin{figure}[htp!]%
-%    \centering
-%    \subfloat[]{{\includegraphics[width=7cm]{figs/PCA_RED_True_cape-shear_magrot_725164_-4_nclust-11_prof-3452.png} }}%
-%    \qquad
-%    \subfloat[]{{\includegraphics[width=7cm]{figs/PCA_RED_True_cape-shear_magrot_725164_-4_nclust-11_prof-7767} }}%
-%    \qquad
-%    \subfloat[]{{\includegraphics[width=7cm]{figs/PCA_RED_True_cape-shear_magrot_725164_-4_nclust-11_prof-5178} }}%
-%    \qquad
-%    \subfloat[]{{\includegraphics[width=7cm]{figs/PCA_RED_True_cape-shear_magrot_725164_-4_nclust-11_prof-12082} }}%
-%    \qquad
-%    \caption{4 profiles that have been re-projected using the first 4 principal components.}%
-%    \label{fig:pca_components}%
-%\end{figure}
 
 \subsubsection{K-means clustering}
 
@@ -194,17 +181,26 @@ The number of clusters to use is not \textit{a priori} obvious. We have the comp
 
 \todo{mention the random seeds producing the same clusters.}
 
-\begin{figure}[h!]
+%\begin{figure}[h!]
+%    \centering
+%    \includegraphics[width=400px]{figs/KMEANS_SCORES_True_cape-shear_magrot.png}
+%    \caption{}
+%    \label{fig:kmeans_scores}
+%\end{figure}
+
+\begin{figure}[htp!]%
     \centering
-    \includegraphics[width=400px]{figs/KMEANS_SCORES_True_cape-shear_magrot.png}
-    \caption{}
-    \label{fig:kmeans_scores}
+    \includegraphics[width=15cm]{figs/placeholder/shear_profile_plot_SEVEN_PCA_PROFILES_True_cape-shear.png}
+    \caption{\todo{fig} The first 7 principal components.}%
+    \label{fig:pca_components}%
 \end{figure}
+
 
 \newpage
 \section{Results}
 
 \subsection{Representative wind profiles}
+
 \subsection{Geographical distribution of RWPs}
 \subsection{Seasonal variation of RWPs}
 
