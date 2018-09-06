@@ -9,16 +9,17 @@ SERVER = 'mmuetz@login.archer.ac.uk'
 LOC = '/nerc/n02/n02/mmuetz/um10.9_runs/archive/u-au197/share/data/history/P1M/figs/./'
 
 FILENAMES = [
-    ('atmos.None.shear_profile_classification_analysis.PCA_PROFILE_True_cape-shear_magrot_pi-0_evr-0.5278288722038269.png', [(r'_evr.*(?:\.png)', r'')]),
-    ('atmos.None.shear_profile_classification_analysis.PCA_PROFILE_True_cape-shear_magrot_pi-1_evr-0.1835406869649887.png', [(r'_evr.*(?:\.png)', r'')]),
-    ('atmos.None.shear_profile_classification_analysis.PCA_PROFILE_True_cape-shear_magrot_pi-2_evr-0.1671045869588852.png', [(r'_evr.*(?:\.png)', r'')]),
-    ('atmos.None.shear_profile_classification_analysis.PCA_PROFILE_True_cape-shear_magrot_pi-3_evr-0.04120809957385063.png',[(r'_evr.*(?:\.png)', r'')]),
-    ('atmos.None.shear_profile_classification_analysis.PCA_RED_True_cape-shear_magrot_725164_-4_nclust-11_prof-3452.png', None), 
-    ('atmos.None.shear_profile_classification_analysis.PCA_RED_True_cape-shear_magrot_725164_-4_nclust-11_prof-7767.png', None), 
-    ('atmos.None.shear_profile_classification_analysis.PCA_RED_True_cape-shear_magrot_725164_-4_nclust-11_prof-5178.png', None), 
-    ('atmos.None.shear_profile_classification_analysis.PCA_RED_True_cape-shear_magrot_725164_-4_nclust-11_prof-12082.png', None),
-    ('atmos.None.shear_profile_classification_analysis.KMEANS_SCORES_True_cape-shear_magrot.png', None),
-    ('atmos.None.shear_profile_classification_analysis.PROFILES_GEOG_LOC_True_cape-shear_magrot_391137_-4_nclust-11.png', None),
+    # Need to rerun on ARCHER.
+    # ('atmos.None.shear_profile_classification_analysis.PCA_PROFILE_True_cape-shear_magrot_pi-0_evr-0.5278288722038269.png', [(r'_evr.*(?:\.png)', r'')]),
+    # ('atmos.None.shear_profile_classification_analysis.PCA_PROFILE_True_cape-shear_magrot_pi-1_evr-0.1835406869649887.png', [(r'_evr.*(?:\.png)', r'')]),
+    # ('atmos.None.shear_profile_classification_analysis.PCA_PROFILE_True_cape-shear_magrot_pi-2_evr-0.1671045869588852.png', [(r'_evr.*(?:\.png)', r'')]),
+    # ('atmos.None.shear_profile_classification_analysis.PCA_PROFILE_True_cape-shear_magrot_pi-3_evr-0.04120809957385063.png',[(r'_evr.*(?:\.png)', r'')]),
+    # ('atmos.None.shear_profile_classification_analysis.PCA_RED_True_cape-shear_magrot_725164_-4_nclust-11_prof-3452.png', None), 
+    # ('atmos.None.shear_profile_classification_analysis.PCA_RED_True_cape-shear_magrot_725164_-4_nclust-11_prof-7767.png', None), 
+    # ('atmos.None.shear_profile_classification_analysis.PCA_RED_True_cape-shear_magrot_725164_-4_nclust-11_prof-5178.png', None), 
+    # ('atmos.None.shear_profile_classification_analysis.PCA_RED_True_cape-shear_magrot_725164_-4_nclust-11_prof-12082.png', None),
+    # ('atmos.None.shear_profile_classification_analysis.KMEANS_SCORES_True_cape-shear_magrot.png', None),
+    # ('atmos.None.shear_profile_classification_analysis.PROFILES_GEOG_LOC_True_cape-shear_magrot_391137_-4_nclust-11.png', None),
 ]
 
 
