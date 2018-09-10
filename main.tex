@@ -11,6 +11,7 @@
 
 \newgeometry{margin=2.5cm}
 \newcommand\todo[1]{\textbf{TODO: #1}}
+\newcommand\ts[1]{\textsuperscript{#1}}
 \newcommand\done[1]{}
 
 
@@ -122,15 +123,15 @@ Profiles are filtered on two criteria. The filters reduce the number of profiles
 
 \begin{enumerate}
     \item exclude grid points where CAPE \textless \SI{100}{J.kg^{-1}}; 
-    \item exclude grid points where the maximum shear in the profile is less than the 75\textsuperscript{th} percentile. The shear is calculated between each pressure level, and only the shear values up to a value of \SI{500}{hPa} are taken into account to favour the lower troposphere.
+    \item exclude grid points where the maximum shear in the profile is less than the 75\ts{th} percentile. The shear is calculated between each pressure level, and only the shear values up to a value of \SI{500}{hPa} are taken into account to favour the lower troposphere.
 \end{enumerate} 
 
 \todo{say how many profiles are left after each of the filters are applied.}
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=15cm]{figs/placeholder/shear_profile_plot_PROFILES_GEOG_ALL_True_cape-shear_magrot_391137_-7_nclust-10.png}
-    \caption{\todo{fig} Heatmap of grid-columns that have been filtered based on CAPE and maximum shear.}
+    \includegraphics[width=15cm]{figs/shear_profile_plot_PROFILES_GEOG_ALL_True_cape-shear_magrot_391137_-7_nclust-10.png}
+    \caption{Heatmap of grid-columns that have been filtered based on CAPE and maximum shear.}
     \label{fig:filtered_heatmap}
 \end{figure}
 
@@ -168,8 +169,8 @@ The number of dimensions of each sample in the original dataset is 40 (20 pressu
 
 \begin{figure}[htp!]%
     \centering
-    \includegraphics[width=15cm]{figs/placeholder/shear_profile_plot_SEVEN_PCA_PROFILES_True_cape-shear.png}
-    \caption{\todo{fig} The first 7 principal components.}%
+    \includegraphics[width=15cm]{figs/shear_profile_plot_SEVEN_PCA_PROFILES_True_cape-shear.png}
+    \caption{The first 7 principal components, shown as profiles of magnitudes between -1 and 1. Blue solid line is the u' profile, red solid is v'. }%
     \label{fig:pca_components}%
 \end{figure}
 
@@ -196,18 +197,22 @@ The number of clusters to use is not \textit{a priori} obvious. We have the comp
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=17cm]{figs/placeholder/shear_profile_plot_ALL_PROFILES_True_cape-shear_magrot_391137_-7_nclust-10.png}
-    \caption{}
+    \includegraphics[width=17cm]{figs/shear_profile_plot_ALL_PROFILES_True_cape-shear_magrot_391137_-7_nclust-10.png}
+    \caption{Wind profiles of the 10 RWP clusters, labelled C1-10. Blue solid lines are the u' winds, red solid are the v' winds. The 10\ts{th} and 90\ts{th} percentiles are shown with dotted lines.}
     \label{fig:RWPs}
 \end{figure}
+
+The 10 RWPs are shown in Fig. \ref{fig:RWPs}, along with the 10\ts{th} and 90\ts{th} percentiles at each pressure level. It should be noted that there is no spread in the v' profile at \SI{850}{hPa}; this is due to the normalization of the rotation to align all profiles in the u' direction. The spread of the percentiles increases going higher into the atmosphere. This is caused by the contribution of the lower troposphere being favoured, as described in \todo{ref}. 
+
+Four profiles show strong low-level shear: C2, C4, C6 and C10, with C6 showing particularly strong shear of \SI{22}{m.s^{-1}} between \si{1000} and \SI{850}{hPa}. Profiles C2, C10 and C4 respectively look like scaled versions of the same profile.
 
 
 \subsection{Geographical distribution of RWPs}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=17cm]{figs/placeholder/shear_profile_plot_PROFILES_GEOG_LOC_True_cape-shear_magrot_391137_-7_nclust-10.png}
-    \caption{}
-    \label{fig:RWPs}
+    \includegraphics[width=17cm]{figs/shear_profile_plot_PROFILES_GEOG_LOC_True_cape-shear_magrot_391137_-7_nclust-10.png}
+    \caption{Left column: hodographs of the 10 RWP clusters, showing the u' and v' winds as in Fig. \ref{fig:RWPs}. 1 shows the lowest level: \SI{1000}{hPa}; 20 shows the highest: \SI{50}{hPa}. Above \SI{500}{hPa} is shown as a dashed line. Centre column: Wind rose of distributions of the wind at \SI{850}{hPa}. Right column: heatmaps of the distributions of each RWP across the tropics.}
+    \label{fig:RWP_geog_loc}
 \end{figure}
 
 \subsection{Seasonal variation of RWPs}
