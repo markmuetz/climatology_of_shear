@@ -90,7 +90,7 @@ The rest of this study is structured as follows. In the Methods section, we prov
 %    \item diagnostics output every \SI{6}{hr}, which gives a total of (4 * 30 * 145 * 192) \si{3340800} profiles
 %\end{itemize}
 %
-The GCM that is used is the United Kingdom Met Office's Unified Model (UM), version 10.9. It is run using the standard Global Atmosphere 7.0 (GA7.0) settings, as described in depth in \todo{cite walters2018met}. The interested reader is directed to that paper for the full details. It is an atmosphere only model, using prescribed sea surface temperatures. It uses a version of the Gregory-Rowntree convection scheme \todo{cite gregory1990}. Here, it is run with an N96 resolution, which has a resolution of \SI{209}{km} at the equator. It is run for five years, from September 1988 to August 1993 using a \SI{360}{day} calendar. Running for five years allows us to sample inter-annual variation. East-west ($u$) and north-south ($v$) winds are output on 20 pressure levels from \SI{1000}{hPa} to \SI{50}{hPa} with a resolution of \SI{50}{hPa}, and are output every \SI{6}{hours}. Convective Available Potential Energy (CAPE) is also output every \SI{6}{hours}; it is calculated by the model's convection scheme and output as a diagnostic field. Profiles are only considered in the Tropics, defined as being between \ang{30}N and \ang{30}S.
+The GCM that is used is the United Kingdom Met Office's Unified Model (UM), version 10.9. It is run using the standard Global Atmosphere 7.0 (GA7.0) settings, as described in depth in \todo{cite walters2018met}. The interested reader is directed to that paper for the full details. It is an atmosphere only model, using prescribed sea surface temperatures. It uses a version of the Gregory-Rowntree convection scheme \todo{cite gregory1990}, which in its current implementation in the UM is a CAPE closure based mass-flux scheme. Here, it is run with an N96 resolution, which has a resolution of \SI{209}{km} at the equator. It is run for five years, from September 1988 to August 1993 using a \SI{360}{day} calendar. Running for five years allows us to sample inter-annual variation. East-west ($u$) and north-south ($v$) winds are output on 20 pressure levels from \SI{1000}{hPa} to \SI{50}{hPa} with a resolution of \SI{50}{hPa}, and are output every \SI{6}{hours}. Convective Available Potential Energy (CAPE) is also output every \SI{6}{hours}; it is calculated by the model's convection scheme and output as a diagnostic field. Profiles are only considered in the Tropics, defined as being between \ang{30}N and \ang{30}S.
 
 \subsection{Generating the Representative Wind Profiles}
 
@@ -122,7 +122,7 @@ The clustering procedure is shown schematically in Fig. \todo{}, and the details
 Profiles are filtered on two criteria. The filters reduce the number of profiles, excluding ones that either are not likely to produce convective activity or are not profiles with large amounts of shear. The filters are applied independently, so their order of application makes no difference. The filters in use are as follows:
 
 \begin{enumerate}
-    \item exclude grid points where CAPE \textless \SI{100}{J.kg^{-1}}; 
+    \item exclude grid points where CAPE \textless \SI{100}{J.kg^{-1}}. This is done to restrict the profiles to ones where convection is likely to be active; 
     \item exclude grid points where the maximum shear in the profile is less than the 75\ts{th} percentile. The shear is calculated between each pressure level, and only the shear values up to a value of \SI{500}{hPa} are taken into account to favour the lower troposphere.
 \end{enumerate} 
 
@@ -135,6 +135,7 @@ Profiles are filtered on two criteria. The filters reduce the number of profiles
     \label{fig:filtered_heatmap}
 \end{figure}
 
+Fig. \ref{fig:filtered_heatmap} shows the distribution of filtered profiles across the tropical belt. Some features that stand out are the reduced magnitudes over the South Atlantic Gyre and South Pacific Gyre, as well as enhanced bands across the equator in the Atlantic, and just north of the equator in the Pacific. These are similar to features seen in global precipitation climatologies, see e.g. Fig. 4 in \todo{cite: adler2003version2 GPCP}. However, there are some differences with global precipitation climatologies, such as over the Western Sahara and over the western Indian Ocean. There is also a high density of profiles in the north-west Pacific, extending further north than is seen in \todo{cite adler}. This may be due to the fact we are using a threshold based on CAPE, and not based on precipitation, to filter the profiles.
 
 \subsubsection{Pre-processing}
 \label{sec:preproc}
@@ -165,14 +166,15 @@ PCA is a process that finds orthogonal, unit length principal components of a da
 
 The algorithm for PCA works by centring the dataset on the mean for each of its dimensions, and then calculating the covariance matrix for this dataset. The principal components can then be taken by finding the eigenvectors of the covariance matrix, with the first component corresponding to the eigenvector with the highest eigenvalue, and so on. 
 
-The number of dimensions of each sample in the original dataset is 40 (20 pressure levels for $u$ and $v$). We have chosen to keep as many principal components that are required to explain 90\% of the variance, which for this dataset is 7. These 7 principal components are shown in Fig. \ref{fig:pca_components}. \todo{say something about these PCs}.
+The number of dimensions of each sample in the original dataset is 40 (20 pressure levels for $u$ and $v$). We have chosen to keep as many principal components that are required to explain 90\% of the variance, which for this dataset is 7. These 7 principal components are shown in Fig. \ref{fig:pca_components}. All principal components show far less magnitude above \SI{500}{hPa}. This is due to the favouring of the lower troposphere, as described in Section \todo{}.  The first four principal components individually show little turning with height; a linear combination of them though could be used to represent a profile with some turning though.  
 
 \begin{figure}[htp!]%
     \centering
     \includegraphics[width=15cm]{figs/shear_profile_plot_SEVEN_PCA_PROFILES_True_cape-shear.png}
-    \caption{The first 7 principal components, shown as profiles of magnitudes between -1 and 1. Blue solid line is the u' profile, red solid is v'. }%
+    \caption{The first 7 principal components, shown as profiles of magnitudes between -1 and 1. Blue solid line is the $u'$ profile, red solid is $v'$. }%
     \label{fig:pca_components}%
 \end{figure}
+
 
 \subsubsection{K-means clustering}
 
@@ -198,22 +200,32 @@ The number of clusters to use is not \textit{a priori} obvious. We have the comp
 \begin{figure}[h]
     \centering
     \includegraphics[width=17cm]{figs/shear_profile_plot_ALL_PROFILES_True_cape-shear_magrot_391137_-7_nclust-10.png}
-    \caption{Wind profiles of the 10 RWP clusters, labelled C1-10. Blue solid lines are the u' winds, red solid are the v' winds. The 10\ts{th} and 90\ts{th} percentiles are shown with dotted lines.}
+    \caption{Wind profiles of the 10 RWP clusters, labelled C1-10. Blue solid lines are the $u'$ winds, red solid are the $v'$ winds. The 10\ts{th} and 90\ts{th} percentiles are shown with dotted lines.}
     \label{fig:RWPs}
 \end{figure}
 
-The 10 RWPs are shown in Fig. \ref{fig:RWPs}, along with the 10\ts{th} and 90\ts{th} percentiles at each pressure level. It should be noted that there is no spread in the v' profile at \SI{850}{hPa}; this is due to the normalization of the rotation to align all profiles in the u' direction. The spread of the percentiles increases going higher into the atmosphere. This is caused by the contribution of the lower troposphere being favoured, as described in \todo{ref}. 
+The 10 RWPs are shown in Fig. \ref{fig:RWPs}, along with the 10\ts{th} and 90\ts{th} percentiles at each pressure level. It should be noted that there is no spread in the $v'$ profile at \SI{850}{hPa}; this is due to the normalization of the rotation to align all profiles in the $u'$ direction. The spread of the percentiles increases going higher into the atmosphere. This is caused by the contribution of the lower troposphere being favoured, as described in \todo{ref}. 
 
-Four profiles show strong low-level shear: C2, C4, C6 and C10, with C6 showing particularly strong shear of \SI{22}{m.s^{-1}} between \si{1000} and \SI{850}{hPa}. Profiles C2, C10 and C4 respectively look like scaled versions of the same profile.
+Four profiles show strong low-level shear: C2, C4, C6 and C10, with C6 showing particularly strong shear of \SI{22}{m.s^{-1}} between \si{1000} and \SI{850}{hPa}. Profiles C2, C10 and C4 respectively look like scaled versions of the same profile, with C2 being the being the strongest and C4 the weakest.
 
 
 \subsection{Geographical distribution of RWPs}
 \begin{figure}[H]
     \centering
     \includegraphics[width=17cm]{figs/shear_profile_plot_PROFILES_GEOG_LOC_True_cape-shear_magrot_391137_-7_nclust-10.png}
-    \caption{Left column: hodographs of the 10 RWP clusters, showing the u' and v' winds as in Fig. \ref{fig:RWPs}. 1 shows the lowest level: \SI{1000}{hPa}; 20 shows the highest: \SI{50}{hPa}. Above \SI{500}{hPa} is shown as a dashed line. Centre column: Wind rose of distributions of the wind at \SI{850}{hPa}. Right column: heatmaps of the distributions of each RWP across the tropics.}
+    \caption{Left column: hodographs of the 10 RWP clusters, showing the $u'$ and $v'$ winds as in Fig. \ref{fig:RWPs}. 1 shows the lowest level: \SI{1000}{hPa}; 20 shows the highest: \SI{50}{hPa}. Above \SI{500}{hPa} is shown as a dashed line. Centre column: Wind rose of distributions of the wind at \SI{850}{hPa}. Right column: heatmaps of the distributions of each RWP across the tropics.}
     \label{fig:RWP_geog_loc}
 \end{figure}
+
+Fig. \ref{fig:RWP_geog_loc} shows hodographs of the 10 RWPs, wind roses of the distribution of the rotation of the profiles, and heatmaps of the geographical distribution of each RWP. From the geographical distributions, the first point to make is that the various RWPs show clear spatial patterns, with some RWPs being variously favoured over specific regions of the globe, e.g. C6 occurs predominantly over the north-west Pacific. Some RWPs occur almost exclusively over the oceans, C1, C3 and C6 are 90.8\%, 93.6\% and 85.8\% over the oceans respectively. This in contrast to RWPs C4, C5, C7, C8, C9 and C10, which are all between 70\% to 82\% over land.
+
+RWP C6 is the most localized of all the RWPs; almost all occurrences are over the north-west Pacific. Most of the activity happens between JJA, meaning that it is localized in time too. It is an interesting profile in terms of its structure as well, having a large amount of low-level shear. 
+
+RWPs C2, C10 and C4 were identified as having similar structures. C2 and C10 show broadly similar geographical distributions: they both occur across South America and and the north-west and south-west Pacific. However, C2 is more active in the north-west Pacific, and shows activity in the south-east Pacific whereas C10 shows very little. Looking at the wind roses for C2 and C10 shows that the winds at \SI{850}{hPa} are orientated in different directions, being eastwards for C2 and westwards for C10. C4 shows a much greater difference in distribution from C2 and C10; there is a lot more activity over south Africa and over the equatorial Pacific. Like C10, the \SI{850}{hPa} winds are orientated mainly westwards. So despite their similarity in terms of their structure, these RWPs are seen to have distinguishing features in terms of how they are distributed across the globe and in orientation.
+
+RWP C1 is strongest over the west Indian Ocean, and has high levels of activity over the west Atlantic, and over the Pacific as well. The activity over the Indian Ocean comes mainly from the months of JJA, with X \% occurring in these months between longitudes X and Y \todo{}. The activity in the Pacific shows seasonal dependence, with activity being highest in the winter hemisphere (not shown). RWP C3 is prominent over the equatorial Atlantic, as well as showing some activity over the Pacific and Indian Oceans. C5 shows little spatial localization. C7 occurs mainly over land - over South America and southern Africa. There is also some signal over the east equatorial Atlantic. C8 is prominent over Africa, and C9 shows signals over Africa and South America, particularly along the west coast which is perhaps related to the position of the Andes.
+
+From the wind roses of orientation, four RWPs are seen to be almost exclusively orientated in a particular direction: C1, C3, C4 and C6. Others are predominantly in one direction: C2, C7, C8 and C10. C5 appears to be bimodal, either directed north-east or west-south-west. C9 has a broad spread of orientations in its distribution. However, it has weak winds at \SI{850}{hPa} (see Fig. \ref{fig:RWPs}), and this may lead to there being more chance of it having different orientations. From the hodographs, half of the RWPs do not show much turning with height, e.g. C1, C2, C3, C4 and C10. C6 shows significant turning from near the surface up to around \SI{500}{hPa}, and C5 and C7 both show similar magnitudes of turning in both the $u'$ and $v'$ directions.
 
 \subsection{Seasonal variation of RWPs}
 
