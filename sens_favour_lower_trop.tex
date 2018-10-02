@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{siunitx}
+
+\usepackage{multirow}
+\usepackage{subfig}
+\usepackage{rotating}
+
+\newgeometry{margin=2.5cm}
+\newcommand\todo[1]{\textbf{TODO: #1}}
+\newcommand\ts[1]{\textsuperscript{#1}}
+\newcommand\done[1]{}
+
+
+\title{Sensitivity to running with favour lower troposphere on/off}
+\author{Mark Muetzelfeldt}
+\date{October 2, 2018}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+This is a short document with some justification for running with favour lower troposphere on. The original reason for running with this setting was to try to minimize the effect of the higher-latitude upper level winds in the clustering procedure. However, I wondered if this was still necessary after restricting my definition of the tropics to 23N - 23S (from 30N - 30S). I believe that it is after running this sensitivity test. 
+
+The means by which the lower troposphere is described in detail in the main document; briefly, it is achieved by weighting the contribution from above \SI{500}{hPa} less than the contribution from below. The justification for doing this is that the lower-level winds are more important for the organization of convection.
+
+The two figures below show why favouring the lower troposphere is done. In Fig. \ref{fig:RWP_favour_on}, which is run with the current best settings, the RWPs are well defined and are not dominated by higher-level winds. The opposite is true in Fig. \ref{fig:RWP_favour_off}. In particular, in C9 and to a lesser extent C4 there is a strong signal from the high-level winds. Thus it makes sense to carry on using the favour lower troposphere setting.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm]{figs/sens_favour_lower_shear_profile_plot_PROFILES_GEOG_LOC_True_cape-shear_magrot_391137_-7_nclust-10.png}
+    \caption{Favour lower troposphere on}
+    \label{fig:RWP_favour_on}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=17cm]{figs/sens_no_favour_lower_shear_profile_plot_PROFILES_GEOG_LOC_True_cape-shear_magrot_391137_-10_nclust-10.png}
+    \caption{Favour lower troposphere off}
+    \label{fig:RWP_favour_off}
+\end{figure}
+
+\end{document}
