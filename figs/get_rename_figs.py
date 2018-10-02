@@ -6,18 +6,22 @@ import shutil
 
 
 SERVER = 'mmuetz@login.archer.ac.uk'
-LOC = '/home/n02/n02/mmuetz/nerc/um10.9_runs/archive/u-au197/omnium_output/om_v0.10.3.0_cosar_v0.7.0.0_4021354f15/P5Y_DP20/figs/./'
+LOC_OLD = '/home/n02/n02/mmuetz/nerc/um10.9_runs/archive/u-au197/omnium_output/om_v0.10.3.0_cosar_v0.7.0.0_4021354f15/P5Y_DP20/figs/./'
+LOC_SENS_FAVOUR_LOWER_TROP_FAVOUR = '/home/n02/n02/mmuetz/nerc/um10.9_runs/archive/u-au197/omnium_output/om_v0.11.0.0_cosar_v0.7.0.0_4021354f15/P5Y_DP20/figs/./'
+LOC_SENS_FAVOUR_LOWER_TROP_NO_FAVOUR = '/home/n02/n02/mmuetz/nerc/um10.9_runs/archive/u-au197/omnium_output/om_v0.11.0.0_cosar_v0.7.0.0_79dc400533/P5Y_DP20/figs/./'
 
 FILENAMES = [
-    ('shear_profile_plot_PROFILES_GEOG_LOC_True_cape-shear_magrot_391137_-7_nclust-10.png', None),
-    ('shear_profile_plot_SEVEN_PCA_PROFILES_True_cape-shear.png', None),
-    ('shear_profile_plot_PROFILES_GEOG_ALL_True_cape-shear_magrot_391137_-7_nclust-10.png', None),
-    ('shear_profile_plot_ALL_PROFILES_True_cape-shear_magrot_391137_-7_nclust-10.png', None),
+    (LOC_OLD, 'shear_profile_plot_PROFILES_GEOG_LOC_True_cape-shear_magrot_391137_-7_nclust-10.png', None, None),
+    (LOC_OLD, 'shear_profile_plot_SEVEN_PCA_PROFILES_True_cape-shear.png', None, None),
+    (LOC_OLD, 'shear_profile_plot_PROFILES_GEOG_ALL_True_cape-shear_magrot_391137_-7_nclust-10.png', None, None),
+    (LOC_OLD, 'shear_profile_plot_ALL_PROFILES_True_cape-shear_magrot_391137_-7_nclust-10.png', None, None),
+    (LOC_SENS_FAVOUR_LOWER_TROP_FAVOUR, 'shear_profile_plot_PROFILES_GEOG_LOC_True_cape-shear_magrot_391137_-7_nclust-10.png', None, 'sens_favour_lower_'),
+    (LOC_SENS_FAVOUR_LOWER_TROP_NO_FAVOUR, 'shear_profile_plot_PROFILES_GEOG_LOC_True_cape-shear_magrot_391137_-10_nclust-10.png', None, 'sens_no_favour_lower_'),
 ]
 
 
 def get_all():
-    filenames = [os.path.join(LOC, fn[0]) for fn in FILENAMES]
+    filenames = [os.path.join(*fn[:2]) for fn in FILENAMES]
 
     cmd_filenames = ' :'.join(filenames)
     cmd = f'rsync -Rza {SERVER}:{cmd_filenames} raw/'
@@ -25,11 +29,13 @@ def get_all():
 
 
 def rename_all():
-    for (fn, sub_repl) in FILENAMES:
+    for (loc, fn, sub_repl, prefix) in FILENAMES:
         new_fn = re.sub('atmos.None.shear_profile_classification_analysis.', '', fn)
         if sub_repl:
             for sub, repl in sub_repl:
                 new_fn = re.sub(sub, repl, new_fn) + '.png'
+        if prefix:
+            new_fn = prefix + new_fn
         print(f'{fn} -> {new_fn}')
         shutil.copyfile(os.path.join('raw', fn), new_fn)
 
