@@ -10,13 +10,20 @@ LOC_OLD = '/home/n02/n02/mmuetz/nerc/um10.9_runs/archive/u-au197/omnium_output/o
 LOC_SENS_FAVOUR_LOWER_TROP_FAVOUR = '/home/n02/n02/mmuetz/nerc/um10.9_runs/archive/u-au197/omnium_output/om_v0.11.0.0_cosar_v0.7.0.0_4021354f15/P5Y_DP20/figs/./'
 LOC_SENS_FAVOUR_LOWER_TROP_NO_FAVOUR = '/home/n02/n02/mmuetz/nerc/um10.9_runs/archive/u-au197/omnium_output/om_v0.11.0.0_cosar_v0.7.0.0_79dc400533/P5Y_DP20/figs/./'
 
-FILENAMES = [
+LOC_COSAR_TMP = '/home/n02/n02/mmuetz/nerc/um10.9_runs/archive/u-au197/archived_omnium_output/omnium_output/om_v0.11.0.0_cosar_v0.7.1.0_e889d0f4f8/P5Y_DP20/figs/./'
+LOC_COSAR_0_7_3_0_RC1 = '/home/n02/n02/mmuetz/nerc/um10.9_runs/archive/u-au197/omnium_output/om_v0.11.1.0_cosar_v0.7.3.0_e889d0f4f8/P5Y_DP20/figs/./'
+
+OLD_FILENAMES = [
     (LOC_OLD, 'shear_profile_plot_PROFILES_GEOG_LOC_True_cape-shear_magrot_391137_-7_nclust-10.png', None, None),
     (LOC_OLD, 'shear_profile_plot_SEVEN_PCA_PROFILES_True_cape-shear.png', None, None),
     (LOC_OLD, 'shear_profile_plot_PROFILES_GEOG_ALL_True_cape-shear_magrot_391137_-7_nclust-10.png', None, None),
     (LOC_OLD, 'shear_profile_plot_ALL_PROFILES_True_cape-shear_magrot_391137_-7_nclust-10.png', None, None),
     (LOC_SENS_FAVOUR_LOWER_TROP_FAVOUR, 'shear_profile_plot_PROFILES_GEOG_LOC_True_cape-shear_magrot_391137_-7_nclust-10.png', None, 'sens_favour_lower_'),
     (LOC_SENS_FAVOUR_LOWER_TROP_NO_FAVOUR, 'shear_profile_plot_PROFILES_GEOG_LOC_True_cape-shear_magrot_391137_-10_nclust-10.png', None, 'sens_no_favour_lower_'),
+]
+
+FILENAMES = [
+    (LOC_COSAR_TMP, 'shear_profile_plot_RWP_month_hist_391137.pdf', None, None),
 ]
 
 
