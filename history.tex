@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{siunitx}
+
+\usepackage{multirow}
+\usepackage{subfig}
+\usepackage{rotating}
+
+\newgeometry{margin=2.5cm}
+\newcommand\todo[1]{\textbf{TODO: #1}}
+\newcommand\ts[1]{\textsuperscript{#1}}
+\newcommand\done[1]{}
+
+
+\title{History of method}
+\author{Mark Muetzelfeldt}
+\date{October 3, 2018}
+
+\begin{document}
+
+\maketitle
+
+
+
+\section{Background}
+
+This is a short document that gives some history and technical details of the clustering work that I did from September 2017 to February 2018. The idea was that I needed to be able to link the grid-column state of a parametrized model to the subgrid shear-induced organizational state. The broad method I was trying was to investigate the wind profiles (WPs) produced by the model, and cluster these into Representative Wind Profiles (RWPs). This would reduce the `wind profile space' from a space that was too large to analyse to say 20 RWPs. Each of these RWPs could then be used to drive an RCE experiment, and then I could use the information from these experiments (such as cloud lifetimes) to feedback into the convection parametrization scheme. (This is future work.)
+
+Initial results from last year were promising, using an sklearn K-Means Clustering Algorithm (KMCA), working on the standard output $u$ and $v$ fields at 6 pressure levels (\todo{what were they?}) collected every \SI{6}{hr} over the course of \SI{1}{month} of simulation. I only considered profiles between \ang{30}N and \ang{30}S over all longitudes. I filtered out profiles having a CAPE of less than \SI{500}{J.kg^{-1}}, or profiles with $w$ \textgreater  \SI{0}{m.s^{-1}}. I found the principal components of the profiles (using PCA), and used this to reduce the number of dimensions from 12 to around 4 (which explained over 90 \% of the variance). This was done as an advised precursor to using the KMCA, as an attempt to reduce the impact of the so-called `curse of dimensionality', and additionally there is interesting information in the shape of the principal components. I made it so that I could quickly experiment with e.g. running with or without filtering, PCA etc. Choosing 20 clusters for the KMCA, and plotting all the WPs for each RWP, it was believable that each cluster did capture some information about the underlying WP sample space, and that the RWPs could be of interest. Initially I was plotting every profile ($u$ and $v$) for each cluster, which made it hard to get a sense of what the mean profile looked like, although did not hide any information away. I have switched to plotting the mean, the mean +/- 1 standard deviation, and the 25\% and 75\% lines. N.B. it is easy to produce figures/results for each combination of options you can think of; it is harder to analyse them all. 
+
+However, the profiles went too high into the atmosphere (\todo{what pressure?}), and because of this the clustering was being dominated by the high-level winds. To improve this, the profiles now only go up to \SI{500}{hPa}. Also, we worked out that we probably did not care about the relative orientation of the different WPs, and additionally we perhaps did not care about the sense of rotation (clockwise or anti-clockwise). I have now normalized for the orientation of the profiles, but not for the sense of rotation. I can also now filter on multiple attributes, and am now filtering on both CAPE and the maximum wind shear of each profile has to be greater than the lowest 25 \% of profiles. Additionally, I am normalizing the profiles on their magnitude at each pressure level separately (see Section \ref{sec:normalization} for more details and justification).
+
+
+\end{document}
